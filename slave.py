@@ -1,11 +1,10 @@
 import socket
-import urllib
 from datetime import datetime
 from threading import Thread
 from time import sleep
 import ssl
 from loggingserver import LoggingServer
-
+import urllib.request
 
 class Slave:
 
