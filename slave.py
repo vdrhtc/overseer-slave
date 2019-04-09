@@ -53,7 +53,7 @@ class Slave:
                 sleep(15)
                 self._current_strategy = "reconnect"
             except Exception as e:
-                self._logger.warn(str(e))
+                self._logger.warn(str(e)+" "+type(e))
                 print(e)
                 break
 
