@@ -46,9 +46,10 @@ class Slave:
         while not self._stop:
             try:
                 self._strategies[self._current_strategy]()
-            except (
-            TimeoutError, ConnectionRefusedError, ConnectionResetError, ConnectionAbortedError, ConnectionError) as e:
-                self._logger.warn(str(e))
+            except (TimeoutError, ConnectionRefusedError,
+                    ConnectionResetError, ConnectionAbortedError,
+                    ConnectionError, socket.error) as e:
+                self._logger.warn(str(e)+" "+type(e))
                 sleep(15)
                 self._current_strategy = "reconnect"
             except Exception as e:
