@@ -49,11 +49,11 @@ class Slave:
             except (TimeoutError, ConnectionRefusedError,
                     ConnectionResetError, ConnectionAbortedError,
                     ConnectionError, socket.error) as e:
-                self._logger.warn(str(e)+" "+type(e))
+                self._logger.warn(str(e))
                 sleep(15)
                 self._current_strategy = "reconnect"
             except Exception as e:
-                self._logger.warn(str(e)+" "+type(e))
+                self._logger.warn(str(e)+" "+str(type(e)))
                 print(e)
                 break
 
