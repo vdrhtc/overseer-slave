@@ -96,6 +96,7 @@ class Slave:
         return "Example state: I'm OK!"
 
     def generate_info_message(self):
-        s = json.dumps({"state": self.generate_state_message(),
-                       " alerts": self.generate_alert_messages()})
+        s = json.dumps({"sent_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "state": self.generate_state_message(),
+                        "alerts": self.generate_alert_messages()})
         return s
