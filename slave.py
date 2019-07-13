@@ -5,6 +5,7 @@ from time import sleep
 import ssl
 from loggingserver import LoggingServer
 import urllib.request
+import json
 
 class Slave:
 
@@ -59,16 +60,6 @@ class Slave:
 
         self._secure_socket.close()
 
-    def _send_update(self):
-        self._logger.debug("Sending update, " + str(datetime.now()))
-        try:
-            data = self.generate_info_message().encode()
-        except Exception as e:
-            data = str(e).encode()
-
-        self._secure_socket.send(data)
-        sleep(15)
-
     def _reconnect(self):
         self._logger.debug("Reconnecting...")
 
@@ -88,6 +79,23 @@ class Slave:
             self._current_strategy = "reconnect"
             sleep(15)
 
-    def generate_info_message(self):
+    def _send_update(self):
+        self._logger.debug("Sending update, " + str(datetime.now()))
+        try:
+            data = self.generate_info_message().encode()
+        except Exception as e:
+            data = str(e).encode()
 
-        return "Hello world!"
+        self._secure_socket.send(data)
+        sleep(15)
+
+    def generate_alert_messages(self):
+        return "", "", ""  # "" means no alert, a tuple of strings may be returned though
+
+    def generate_state_message(self):
+        return "Example state: I'm OK!"
+
+    def generate_info_message(self):
+        s = json.dumps({"state": self.generate_state_message(),
+                       " alerts": self.generate_alert_messages()})
+        return s
